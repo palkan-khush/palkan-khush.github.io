@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aarav &amp; Meera – Wedding Invitation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Pinyon+Script&display=swap">
+<style>
+:root{--bg:#fbf4f1;--ink:#3b0f1e;--muted:#7a5a62;--gold:#946414;--card:#fffaf7;--line:#e3cfc3;--g:#d9ad5b;--ivory:#f6e9d2;--wine:#4a0f22;--wine2:#2e0813;
+--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 2 42 22 22 42 2 22Z' fill='none' stroke='%23d9ad5b' stroke-opacity='.2'/%3E%3Ccircle cx='22' cy='22' r='3' fill='none' stroke='%23d9ad5b' stroke-opacity='.2'/%3E%3C/svg%3E");
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a0a12;--ink:#f6e9d2;--muted:#c4aaa9;--gold:#d9ad5b;--card:#2a1019;--line:#553240}}
+:root[data-theme="dark"]{--bg:#1a0a12;--ink:#f6e9d2;--muted:#c4aaa9;--gold:#d9ad5b;--card:#2a1019;--line:#553240}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 19px/1.6 "Cormorant Garamond",Georgia,serif}
+body::before{content:"";position:fixed;inset:0;background:var(--pat);opacity:.5;pointer-events:none;z-index:-1}
+h1,h2,h3{font-weight:500;margin:0}
+section{max-width:620px;margin:0 auto;padding:54px 24px}
+h2{font-size:2.3rem;font-style:italic;text-align:center}
+.muted{color:var(--muted)}
+.orn{display:flex;align-items:center;gap:12px;margin:10px auto 30px;max-width:220px}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:var(--gold)}
+.orn i{width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+/* gate */
+.cover{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;color:var(--ivory)}
+.door{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(var(--wine),var(--wine2)),var(--pat);background-blend-mode:normal;background-color:var(--wine);transition:transform 1.6s cubic-bezier(.7,0,.2,1)}
+.door{background:var(--pat),linear-gradient(var(--wine),var(--wine2))}
+.l{left:0;box-shadow:inset -3px 0 0 var(--g)}.r{right:0;box-shadow:inset 3px 0 0 var(--g)}
+.door::before,.door::after{content:"";position:absolute;border:solid var(--g)}
+.l::after{inset:7% 0 7% 9%;border-width:2px 0 2px 2px;border-radius:999px 0 0 0}
+.l::before{inset:calc(7% + 14px) 0 calc(7% + 14px) calc(9% + 14px);border-width:1px 0 1px 1px;border-radius:999px 0 0 0;opacity:.55}
+.r::after{inset:7% 9% 7% 0;border-width:2px 2px 2px 0;border-radius:0 999px 0 0}
+.r::before{inset:calc(7% + 14px) calc(9% + 14px) calc(7% + 14px) 0;border-width:1px 1px 1px 0;border-radius:0 999px 0 0;opacity:.55}
+.cover.open .l{transform:translateX(-101%)}.cover.open .r{transform:translateX(101%)}
+.seal,.cover .btn{position:relative;z-index:2;transition:opacity .5s,transform .8s}
+.cover.open .seal,.cover.open .btn{opacity:0;transform:scale(.92);pointer-events:none}
+.seal{width:min(76vw,290px);aspect-ratio:1;border-radius:50%;background:var(--wine2);border:2px solid var(--g);box-shadow:0 0 0 7px var(--wine2),0 0 0 8.5px var(--g);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px}
+.seal small{font-size:1.02rem;font-style:italic;color:var(--g);max-width:85%}
+.seal b{font:400 clamp(2.7rem,13vw,3.5rem)/.98 "Pinyon Script",cursive;color:var(--ivory);margin-top:8px}
+.seal b span{display:block;font:italic 500 1.2rem "Cormorant Garamond",serif;color:var(--g);line-height:1.2}
+.btn{font:600 1.15rem "Cormorant Garamond",serif;letter-spacing:.03em;background:var(--g);color:var(--wine2);border:0;border-radius:999px;padding:12px 34px;cursor:pointer}
+.btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+/* hero */
+.hero{text-align:center;padding-top:46px}
+.arch{border:2px solid var(--gold);border-radius:999px 999px 0 0;box-shadow:0 0 0 6px var(--bg),0 0 0 7.5px var(--gold);padding:56px 22px 44px;margin:8px auto;max-width:390px;background:linear-gradient(var(--card),transparent 70%)}
+.arch svg{width:60px;height:60px;color:var(--gold)}
+.arch h1{font:400 clamp(3.4rem,15vw,4.8rem)/1.02 "Pinyon Script",cursive;margin:8px 0}
+.arch h1 em{display:block;font:italic 500 1.5rem "Cormorant Garamond",serif;color:var(--gold)}
+.date{font-size:1.25rem;margin-top:6px}
+/* countdown */
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center}
+.cd div{border:1.5px solid var(--gold);border-radius:60px 60px 8px 8px;padding:20px 2px 12px;background:var(--card);font-style:italic}
+.cd b{display:block;font:500 2.4rem/1.1 "Cormorant Garamond",serif;font-style:normal}
+/* program */
+.tl{list-style:none;margin:0;padding:0 0 0 24px;border-left:1.5px solid var(--gold)}
+.tl li{position:relative;padding:0 0 34px 18px}
+.tl li::before{content:"";position:absolute;left:-31px;top:12px;width:12px;height:12px;background:var(--gold);transform:rotate(45deg)}
+.tl h3{font-size:2rem;font-style:italic}
+.tl a{color:var(--gold);font-weight:600}
+.tools{position:fixed;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:60;display:flex;gap:8px}
+.tools button{background:var(--wine2);color:var(--ivory);border:1px solid var(--g);border-radius:999px;padding:6px 14px;font:600 .95rem "Cormorant Garamond",serif;cursor:pointer}
+footer{text-align:center;padding:10px 24px 56px}
+@media (prefers-reduced-motion:reduce){.door,.seal,.cover .btn{transition:none}}
+</style>
+</head>
+<body>
+<div class="tools"><button id="mus" aria-pressed="false">Music off</button><button id="lang">हिंदी</button></div>
+
+<div class="cover" id="cover">
+  <div class="door l"></div><div class="door r"></div>
+  <div class="seal"><small id="forGuest">You are invited</small><b>Aarav<span>&amp;</span>Meera</b></div>
+  <button class="btn" id="openBtn" data-i="open">Open invitation</button>
+</div>
+
+<section class="hero">
+  <div class="arch">
+    <svg viewBox="-50 -50 100 100" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><defs><ellipse id="p" cx="0" cy="-26" rx="8" ry="20"/></defs><use href="#p"/><use href="#p" transform="rotate(45)"/><use href="#p" transform="rotate(90)"/><use href="#p" transform="rotate(135)"/><use href="#p" transform="rotate(180)"/><use href="#p" transform="rotate(225)"/><use href="#p" transform="rotate(270)"/><use href="#p" transform="rotate(315)"/><circle r="5" fill="currentColor"/></svg>
+    <div class="muted" data-i="together">Together with their families</div>
+    <h1>Aarav<em>&amp;</em>Meera</h1>
+    <div class="orn" style="margin:14px auto 16px;max-width:160px"><i></i></div>
+    <div class="date">Saturday, 20 February 2027<br><span class="muted">Gurugram, Haryana</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 data-i="count">Counting down</h2><div class="orn"><i></i></div>
+  <div class="cd" id="cd"><div><b>–</b>days</div><div><b>–</b>hours</div><div><b>–</b>minutes</div><div><b>–</b>seconds</div></div>
+</section>
+
+<section>
+  <h2 data-i="prog">The celebrations</h2><div class="orn"><i></i></div>
+  <ul class="tl">
+    <li><h3>Mehndi</h3><div>Thursday, 18 February · 5:00 PM</div><div class="muted">The Orchard Lawns · Dress code: green &amp; yellow</div><a href="https://www.google.com/maps/search/?api=1&query=The+Orchard+Lawns+Gurugram" target="_blank" rel="noopener" data-i="dir">Get directions</a></li>
+    <li><h3>Haldi</h3><div>Friday, 19 February · 11:00 AM</div><div class="muted">Family residence · Dress code: yellow</div><a href="https://www.google.com/maps/search/?api=1&query=Gurugram" target="_blank" rel="noopener" data-i="dir">Get directions</a></li>
+    <li><h3>Sangeet</h3><div>Friday, 19 February · 7:00 PM</div><div class="muted">Grand Ballroom, The Palm Hotel · Dress code: festive</div><a href="https://www.google.com/maps/search/?api=1&query=Grand+Ballroom+Gurugram" target="_blank" rel="noopener" data-i="dir">Get directions</a></li>
+    <li><h3>Wedding</h3><div>Saturday, 20 February · 6:00 PM</div><div class="muted">Royal Gardens Banquet · Dress code: traditional</div><a href="https://www.google.com/maps/search/?api=1&query=Royal+Gardens+Banquet+Gurugram" target="_blank" rel="noopener" data-i="dir">Get directions</a></li>
+  </ul>
+</section>
+
+<footer>
+  <div class="orn"><i></i></div>
+  <div class="muted">We can’t wait to celebrate with you.<br>With love, the Sharma &amp; Verma families<br>Questions? Call +91 99999 99999</div>
+</footer>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+// guest name from the link, e.g. #rahul-sharma
+try{var h=decodeURIComponent(location.hash.slice(1)).replace(/-/g,' ').trim();
+if(h){h=h.replace(/\b\w/g,function(c){return c.toUpperCase()});$('#forGuest').textContent='Dear '+h;}}catch(e){}
+var cover=$('#cover');
+$('#openBtn').onclick=function(){cover.classList.add('open');startMusic();setTimeout(function(){cover.style.display='none'},1700)};
+var target=new Date('2027-02-20T18:00:00+05:30').getTime();
+function tick(){var d=Math.max(0,target-Date.now()),v=[Math.floor(d/864e5),Math.floor(d%864e5/36e5),Math.floor(d%36e5/6e4),Math.floor(d%6e4/1e3)];
+document.querySelectorAll('#cd b').forEach(function(b,i){b.textContent=v[i]})}
+tick();setInterval(tick,1000);
+var ctx,timer,on=false,step=2,sc=[0,2,4,7,9,12,14];
+function note(){var f=261.63*Math.pow(2,sc[step]/12),t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();
+o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.05);g.gain.exponentialRampToValueAtTime(.001,t+1.8);
+o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+1.9);
+step=Math.max(0,Math.min(sc.length-1,step+[-2,-1,1,2][Math.floor(Math.random()*4)]))}
+function startMusic(){if(on)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();on=true;note();timer=setInterval(note,700);ui()}catch(e){}}
+function stopMusic(){on=false;clearInterval(timer);ui()}
+var L='en';function ui(){var b=$('#mus');b.textContent=(L==='hi'?(on?'संगीत चालू':'संगीत बंद'):(on?'Music on':'Music off'));b.setAttribute('aria-pressed',on)}
+$('#mus').onclick=function(){on?stopMusic():startMusic()};
+var T={hi:{open:'निमंत्रण खोलें',together:'दोनों परिवारों के साथ',count:'उलटी गिनती',prog:'समारोह',dir:'रास्ता देखें'}};
+var E={};document.querySelectorAll('[data-i]').forEach(function(el){E[el.dataset.i]=E[el.dataset.i]||el.textContent});
+$('#lang').onclick=function(){L=L==='en'?'hi':'en';document.documentElement.lang=L;
+document.querySelectorAll('[data-i]').forEach(function(el){el.textContent=L==='hi'?T.hi[el.dataset.i]:E[el.dataset.i]});
+$('#lang').textContent=L==='en'?'हिंदी':'English';ui()};
+})();
+</script>
+</body>
+</html>
