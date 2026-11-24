@@ -67,11 +67,37 @@ h2{font-size:2.3rem;font-style:italic;text-align:center}
 .venue h3{font-size:1.9rem;font-style:italic;margin:4px 0}
 .sub{font-style:italic;color:var(--muted)}
 footer a{color:var(--gold);font-weight:600}
+html{scroll-behavior:smooth}
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.show{position:relative;aspect-ratio:4/3;margin:10px 8px;border:1.5px solid var(--gold);border-radius:18px;overflow:hidden;box-shadow:0 0 0 6px var(--bg),0 0 0 7.5px var(--gold);background:var(--pat),linear-gradient(135deg,#4a0f22,#2e0813)}
+.show::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(transparent,rgba(30,6,14,.6));pointer-events:none}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.3s ease}
+.slide.on{opacity:1}
+.slide::before{content:"K & P";position:absolute;inset:0;display:grid;place-items:center;font:400 3.2rem "Pinyon Script",cursive;color:rgba(217,173,91,.55)}
+.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.dots{position:absolute;left:0;right:0;bottom:14px;z-index:3;display:flex;justify-content:center;gap:8px}
+.dots button{width:10px;height:10px;padding:0;border:0;border-radius:999px;background:rgba(246,233,210,.6);cursor:pointer;transition:width .4s,background .4s}
+.dots button.on{width:28px;background:var(--g)}
+.venue a{display:inline-block;margin-top:12px;color:var(--gold);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.venue a:visited{color:var(--gold)}
+.cue{display:block;margin:30px auto 0;background:none;border:0;cursor:pointer;padding:10px}
+.cue i{display:block;width:14px;height:14px;border:solid var(--gold);border-width:0 2px 2px 0;transform:rotate(45deg);animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(7px) rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .rv{opacity:1;transform:none;transition:none}.cue i{animation:none}.slide{transition:none}}
+.gan{font:italic 600 1.4rem "Cormorant Garamond",serif;color:var(--gold);margin:6px 0 14px}
+.map{display:block;width:100%;height:230px;border:1.5px solid var(--gold);border-radius:8px;margin-top:16px}
+.arch-photo{position:relative;width:min(78%,260px);aspect-ratio:3/4;margin:10px auto 34px;border:2px solid var(--gold);border-radius:999px 999px 0 0;overflow:hidden;box-shadow:0 0 0 6px var(--bg),0 0 0 7.5px var(--gold);background:var(--pat),linear-gradient(135deg,#4a0f22,#2e0813)}
+.arch-photo::before{content:"K & P";position:absolute;inset:0;display:grid;place-items:center;font:400 3rem "Pinyon Script",cursive;color:rgba(217,173,91,.55)}
+.arch-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.story p{text-align:center;max-width:30em;margin:0 auto;font-size:1.25rem}
+.sig{text-align:center;font:400 2.2rem "Pinyon Script",cursive;color:var(--gold);margin-top:14px}
 .tools{position:fixed;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:60;display:flex;gap:8px}
 .tools button{background:var(--wine2);color:var(--ivory);border:1px solid var(--g);border-radius:999px;padding:6px 14px;font:600 .95rem "Cormorant Garamond",serif;cursor:pointer}
 footer{text-align:center;padding:10px 24px 56px}
 @media (prefers-reduced-motion:reduce){.door,.seal,.cover .btn{transition:none}}
 </style>
+<script>document.documentElement.className='js'</script>
 </head>
 <body>
 <div class="tools"><button id="mus" aria-pressed="false">Music off</button><button id="lang">हिंदी</button></div>
@@ -85,17 +111,37 @@ footer{text-align:center;padding:10px 24px 56px}
 <section class="hero">
   <div class="arch">
     <svg viewBox="-50 -50 100 100" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><defs><ellipse id="p" cx="0" cy="-26" rx="8" ry="20"/></defs><use href="#p"/><use href="#p" transform="rotate(45)"/><use href="#p" transform="rotate(90)"/><use href="#p" transform="rotate(135)"/><use href="#p" transform="rotate(180)"/><use href="#p" transform="rotate(225)"/><use href="#p" transform="rotate(270)"/><use href="#p" transform="rotate(315)"/><circle r="5" fill="currentColor"/></svg>
+    <div class="gan" data-i="gan">Shree Ganeshay Namah</div>
     <div class="muted" data-i="together">Together with their families</div>
     <h1>Khush<em>&amp;</em>Palkan</h1>
     <div class="orn" style="margin:14px auto 16px;max-width:160px"><i></i></div>
     <div class="scratch" id="sc"><div class="under"><span class="muted" data-i="save">Save the date</span><b>Sunday, 31 January 2027</b></div><canvas id="cv" tabindex="0" role="button" aria-label="Scratch to reveal the wedding date. Press Enter to reveal."></canvas></div>
     <div class="muted">Faridabad, Haryana</div>
   </div>
+  <button class="cue" id="cue" aria-label="Scroll down"><i></i></button>
 </section>
 
-<section>
+<section id="photos" class="rv">
+  <h2 data-i="mom">Our moments</h2><div class="orn"><i></i></div>
+  <div class="show" id="show" role="group" aria-roledescription="carousel" aria-label="Photo gallery">
+    <div class="slide"><img src="photo1.jpg" alt="Khush and Palkan" onerror="this.style.display='none'"></div>
+    <div class="slide"><img src="photo2.jpg" alt="Khush and Palkan" onerror="this.style.display='none'"></div>
+    <div class="slide"><img src="photo3.jpg" alt="Khush and Palkan" onerror="this.style.display='none'"></div>
+    <div class="slide"><img src="photo4.jpg" alt="Khush and Palkan" onerror="this.style.display='none'"></div>
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<section class="rv story">
+  <h2 data-i="story">Our story</h2><div class="orn"><i></i></div>
+  <div class="arch-photo"><img src="story.jpg" alt="Khush and Palkan" onerror="this.style.display='none'"></div>
+  <p data-i="storyp">Two people, one story. What began as a simple hello grew into friendship, and friendship into a promise. On 31 January 2027, surrounded by our families and your blessings, we begin our forever together.</p>
+  <div class="sig">Khush &amp; Palkan</div>
+</section>
+
+<section class="rv">
   <h2 data-i="prog">The celebrations</h2><div class="orn"><i></i></div>
-  <div class="venue"><div class="muted" data-i="at">All celebrations are at</div><h3>Golden Galaxy Hotels &amp; Resorts</h3><div class="muted">Faridabad, Haryana</div><a href="https://www.google.com/maps?ftid=0x390cda22f2680bcf:0xc57b0ab441ca9418" target="_blank" rel="noopener" data-i="dir">Get directions</a></div>
+  <div class="venue"><div class="muted" data-i="at">All celebrations are at</div><h3>Golden Galaxy Hotels &amp; Resorts</h3><div class="muted">41.5 Milestone, NH-19 (Delhi Mathura Road),<br>Faridabad, Haryana</div><iframe class="map" title="Map of Golden Galaxy Hotels &amp; Resorts" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Golden+Galaxy+Hotels+%26+Resorts+Faridabad&amp;output=embed"></iframe><a href="https://www.google.com/maps?ftid=0x390cda22f2680bcf:0xc57b0ab441ca9418" target="_blank" rel="noopener" data-i="dir">Click here for Directions</a></div>
   <ul class="tl">
     <li><h3>Haldi</h3><div>Saturday, 30 January · 12:00 PM</div><div class="muted">Hall: Terra&amp;Pool</div></li>
     <li><h3>A Promise to Forever</h3><div class="sub">Ring Ceremony</div><div>Saturday, 30 January · 7:00 PM</div><div class="muted">Hall: Terra&amp;Pool</div></li>
@@ -104,12 +150,12 @@ footer{text-align:center;padding:10px 24px 56px}
   </ul>
 </section>
 
-<section>
+<section class="rv">
   <h2 data-i="count">Counting down</h2><div class="orn"><i></i></div>
   <div class="cd" id="cd"><div><b>–</b>days</div><div><b>–</b>hours</div><div><b>–</b>minutes</div><div><b>–</b>seconds</div></div>
 </section>
 
-<footer>
+<footer class="rv">
   <div class="orn"><i></i></div>
   <div class="muted">We can’t wait to celebrate with you.<br>With love, the Virmani and Gupta families<br>Call <a href="tel:+919582421360">+91 95824 21360</a></div>
 </footer>
@@ -137,11 +183,23 @@ function startMusic(){if(on)return;if(synth){synthStart();return}on=true;ui();va
 function stopMusic(){on=false;au.pause();clearInterval(timer);ui()}
 var L='en';function ui(){var b=$('#mus');b.textContent=(L==='hi'?(on?'संगीत चालू':'संगीत बंद'):(on?'Music on':'Music off'));b.setAttribute('aria-pressed',on)}
 $('#mus').onclick=function(){on?stopMusic():startMusic()};
-var T={hi:{open:'निमंत्रण खोलें',together:'दोनों परिवारों के साथ',count:'उलटी गिनती',prog:'समारोह',dir:'रास्ता देखें',at:'सभी समारोह यहाँ हैं',save:'तारीख़ याद रखें'}};
+var T={hi:{open:'निमंत्रण खोलें',together:'दोनों परिवारों के साथ',count:'उलटी गिनती',prog:'समारोह',dir:'रास्ता देखने के लिए यहाँ क्लिक करें',mom:'हमारे पल',gan:'श्री गणेशाय नमः',story:'हमारी कहानी',storyp:'दो लोग, एक कहानी। एक साधारण मुलाक़ात दोस्ती बनी, और दोस्ती एक वादा। 31 जनवरी 2027 को, अपने परिवारों और आपके आशीर्वाद के साथ, हम अपना जीवन साथ शुरू करेंगे।',at:'सभी समारोह यहाँ हैं',save:'तारीख़ याद रखें'}};
 var E={};document.querySelectorAll('[data-i]').forEach(function(el){E[el.dataset.i]=E[el.dataset.i]||el.textContent});
 $('#lang').onclick=function(){L=L==='en'?'hi':'en';document.documentElement.lang=L;
 document.querySelectorAll('[data-i]').forEach(function(el){el.textContent=L==='hi'?T.hi[el.dataset.i]:E[el.dataset.i]});
 $('#lang').textContent=L==='en'?'हिंदी':'English';ui()};
+// photo slideshow
+(function(){var s=document.querySelectorAll('.slide'),box=$('#dots'),sh=$('#show'),i=0,t,sx=null;
+s.forEach(function(_,n){var b=document.createElement('button');b.setAttribute('aria-label','Photo '+(n+1));b.onclick=function(){go(n);auto()};box.appendChild(b)});
+function go(n){i=(n+s.length)%s.length;s.forEach(function(e,k){e.classList.toggle('on',k===i)});[].forEach.call(box.children,function(b,k){b.classList.toggle('on',k===i)})}
+function auto(){clearInterval(t);if(!matchMedia('(prefers-reduced-motion:reduce)').matches)t=setInterval(function(){go(i+1)},4500)}
+sh.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+sh.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){go(i+(dx<0?1:-1));auto()}sx=null});
+go(0);auto()})();
+// scroll reveal + scroll cue
+document.querySelectorAll('.tl li').forEach(function(l){l.classList.add('rv')});
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.rv').forEach(function(e){io.observe(e)})}else{document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in')})}
+$('#cue').onclick=function(){$('#photos').scrollIntoView({behavior:'smooth'})};
 // scratch card
 (function(){var c=$('#cv'),box=$('#sc'),x=c.getContext('2d'),down=false,touched=false;
 function draw(){var r=box.getBoundingClientRect(),d=window.devicePixelRatio||1,W=r.width,H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
