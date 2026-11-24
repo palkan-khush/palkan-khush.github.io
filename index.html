@@ -58,6 +58,11 @@ h2{font-size:2.3rem;font-style:italic;text-align:center}
 .tl li::before{content:"";position:absolute;left:-31px;top:12px;width:12px;height:12px;background:var(--gold);transform:rotate(45deg)}
 .tl h3{font-size:2rem;font-style:italic}
 .tl a{color:var(--gold);font-weight:600}
+.scratch{position:relative;width:min(100%,300px);height:112px;margin:20px auto 8px;border:1.5px solid var(--gold);border-radius:8px;overflow:hidden;background:var(--card)}
+.scratch .under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.25}
+.scratch .under b{font:italic 500 1.6rem "Cormorant Garamond",serif}
+.scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer;transition:opacity .9s}
+.scratch.done canvas{opacity:0;pointer-events:none}
 .venue{text-align:center;border:1.5px solid var(--gold);border-radius:8px;background:var(--card);padding:22px 18px;margin-bottom:38px}
 .venue h3{font-size:1.9rem;font-style:italic;margin:4px 0}
 .sub{font-style:italic;color:var(--muted)}
@@ -83,7 +88,8 @@ footer{text-align:center;padding:10px 24px 56px}
     <div class="muted" data-i="together">Together with their families</div>
     <h1>Khush<em>&amp;</em>Palkan</h1>
     <div class="orn" style="margin:14px auto 16px;max-width:160px"><i></i></div>
-    <div class="date">Sunday, 31 January 2027<br><span class="muted">Faridabad, Haryana</span></div>
+    <div class="scratch" id="sc"><div class="under"><span class="muted" data-i="save">Save the date</span><b>Sunday, 31 January 2027</b></div><canvas id="cv" tabindex="0" role="button" aria-label="Scratch to reveal the wedding date. Press Enter to reveal."></canvas></div>
+    <div class="muted">Faridabad, Haryana</div>
   </div>
 </section>
 
@@ -125,15 +131,31 @@ function note(){var f=261.63*Math.pow(2,sc[step]/12),t=ctx.currentTime,o=ctx.cre
 o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.05);g.gain.exponentialRampToValueAtTime(.001,t+1.8);
 o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+1.9);
 step=Math.max(0,Math.min(sc.length-1,step+[-2,-1,1,2][Math.floor(Math.random()*4)]))}
-function startMusic(){if(on)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();on=true;note();timer=setInterval(note,700);ui()}catch(e){}}
-function stopMusic(){on=false;clearInterval(timer);ui()}
+var au=new Audio('SaariUmar.mp3'),synth=false;au.loop=true;au.volume=.7;au.onerror=function(){synth=true;if(on){on=false;startMusic()}};
+function synthStart(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();on=true;note();timer=setInterval(note,700);ui()}catch(e){}}
+function startMusic(){if(on)return;if(synth){synthStart();return}on=true;ui();var p=au.play();if(p&&p.catch)p.catch(function(){synth=true;on=false;startMusic()})}
+function stopMusic(){on=false;au.pause();clearInterval(timer);ui()}
 var L='en';function ui(){var b=$('#mus');b.textContent=(L==='hi'?(on?'संगीत चालू':'संगीत बंद'):(on?'Music on':'Music off'));b.setAttribute('aria-pressed',on)}
 $('#mus').onclick=function(){on?stopMusic():startMusic()};
-var T={hi:{open:'निमंत्रण खोलें',together:'दोनों परिवारों के साथ',count:'उलटी गिनती',prog:'समारोह',dir:'रास्ता देखें',at:'सभी समारोह यहाँ हैं'}};
+var T={hi:{open:'निमंत्रण खोलें',together:'दोनों परिवारों के साथ',count:'उलटी गिनती',prog:'समारोह',dir:'रास्ता देखें',at:'सभी समारोह यहाँ हैं',save:'तारीख़ याद रखें'}};
 var E={};document.querySelectorAll('[data-i]').forEach(function(el){E[el.dataset.i]=E[el.dataset.i]||el.textContent});
 $('#lang').onclick=function(){L=L==='en'?'hi':'en';document.documentElement.lang=L;
 document.querySelectorAll('[data-i]').forEach(function(el){el.textContent=L==='hi'?T.hi[el.dataset.i]:E[el.dataset.i]});
 $('#lang').textContent=L==='en'?'हिंदी':'English';ui()};
+// scratch card
+(function(){var c=$('#cv'),box=$('#sc'),x=c.getContext('2d'),down=false,touched=false;
+function draw(){var r=box.getBoundingClientRect(),d=window.devicePixelRatio||1,W=r.width,H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+var g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#b98a35');g.addColorStop(.5,'#f0d089');g.addColorStop(1,'#b98a35');x.fillStyle=g;x.fillRect(0,0,W,H);
+x.fillStyle='#4a0f22';x.font='italic 600 20px "Cormorant Garamond",Georgia,serif';x.textAlign='center';x.textBaseline='middle';x.fillText('Scratch to reveal the date',W/2,H/2)}
+draw();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){if(!touched)draw()});
+function paint(e){touched=true;var r=c.getBoundingClientRect();x.globalCompositeOperation='destination-out';x.beginPath();x.arc(e.clientX-r.left,e.clientY-r.top,20,0,7);x.fill();x.globalCompositeOperation='source-over'}
+function check(){var im=x.getImageData(0,0,c.width,c.height).data,n=0,t=0;for(var i=3;i<im.length;i+=64){t++;if(im[i]<30)n++}if(n/t>.4)reveal()}
+function reveal(){box.classList.add('done')}
+c.onpointerdown=function(e){down=true;c.setPointerCapture(e.pointerId);paint(e)};
+c.onpointermove=function(e){if(down)paint(e)};
+c.onpointerup=function(){down=false;check()};
+c.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();reveal()}};
+})();
 })();
 </script>
 </body>
